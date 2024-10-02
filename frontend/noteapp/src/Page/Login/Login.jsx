@@ -2,6 +2,7 @@ import { useState } from "react";
 import PasswordInput from "../../Component/Input/PasswordInput";
 import Navbar from "../../Component/Navbar/Navbar";
 import { Link } from "react-router-dom";
+import { validateEmail } from "../../util/helper";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,18 @@ const Login = () => {
 
   const handleLogin = (e) =>{
     e.preventDefault();
+
+    if (!validateEmail(email)){
+        setError("Please enter a valid email address.");
+        return
+    }
+
+    if (!password){
+        setError("please enter your passsword");
+        return;
+    }
+
+    setError("")
   }
   return (
     <div>
@@ -30,8 +43,10 @@ const Login = () => {
 
             <PasswordInput 
                 value ={password}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 />
+            
+            {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
             <button type="submit" className="btn-primary">
               Login
