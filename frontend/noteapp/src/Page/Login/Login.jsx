@@ -9,22 +9,21 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-
-  const handleLogin = (e) =>{
+  const handleLogin = (e) => {
     e.preventDefault();
 
-    if (!validateEmail(email)){
-        setError("Please enter a valid email address.");
-        return
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
     }
 
-    if (!password){
-        setError("please enter your passsword");
-        return;
+    if (!password) {
+      setError("please enter your passsword");
+      return;
     }
 
-    setError("")
-  }
+    setError("");
+  };
   return (
     <div>
       <Navbar />
@@ -41,11 +40,11 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <PasswordInput 
-                value ={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-            
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
             {error && <p className="text-red-500 text-xs pb-1">{error}</p>}
 
             <button type="submit" className="btn-primary">
