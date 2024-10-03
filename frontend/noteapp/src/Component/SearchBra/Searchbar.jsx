@@ -1,5 +1,5 @@
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { IoMdClose} from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 const Searchbar = ({ value, onChange, handleSearch, onClearSearch }) => {
   return (
