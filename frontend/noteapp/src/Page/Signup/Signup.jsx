@@ -61,8 +61,8 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="flex items-center justify-center mt-28">
-        <div className="w-96 border rounded bg-white px-7 py-10">
+      <div className="flex items-center justify-center mt-10 md:mt-28 px-4 sm:px-0">
+        <div className="w-full max-w-sm border rounded bg-white px-7 py-10 sm:w-96">
           <form onSubmit={handleSignup}>
             <h4 className="text-xl text-center mb-7">SignUp </h4>
 
@@ -94,7 +94,7 @@ const Signup = () => {
 
             <p className="text-sm text-center mt-4">
               Already have an account?{" "}
-              <Link to="/Login" className="font-medium text-gray-500 underline">
+              <Link to="/" className="font-medium text-gray-500 underline">
                 Login
               </Link>
             </p>

@@ -116,24 +116,24 @@ app.post("/login", async (req, res) => {
 });
 
 //Get User
-app.get("/get-user", authenticateToken, async(req,res)=>{
-    const {user} = req.user;
+app.get("/get-user", authenticateToken, async (req, res) => {
+  const { user } = req.user;
 
-    const isUser = await User.findOne({_id:user._id});
+  const isUser = await User.findOne({ _id: user._id });
 
-    if(!isUser){
-        return res.sendStatus(401);
-    }
-    return res.json({
-        user:{
-            username:isUser.username,
-            email:isUser.email,
-            _id: isUser._Id,
-            createdOn: isUser.createdOn
-        },
-        message:"",
-    })
-})
+  if (!isUser) {
+    return res.sendStatus(401);
+  }
+  return res.json({
+    user: {
+      username: isUser.username,
+      email: isUser.email,
+      _id: isUser._Id,
+      createdOn: isUser.createdOn,
+    },
+    message: "",
+  });
+});
 
 // Add Notes
 app.post("/add-note", authenticateToken, async (req, res) => {
@@ -258,7 +258,6 @@ app.delete("/delete-note/:noteId", authenticateToken, async (req, res) => {
 
 //Update isPinned Value
 app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
-
   const noteId = req.params.noteId;
   const { isPinned } = req.body;
   const { user } = req.user;
@@ -270,7 +269,7 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
       return res.status(404).json({ error: true, message: "Note not found" });
     }
 
-     note.isPinned = isPinned;
+    note.isPinned = isPinned;
 
     await note.save();
 
@@ -283,6 +282,38 @@ app.put("/update-note-pinned/:noteId", authenticateToken, async (req, res) => {
     return res.status(500).json({
       error: true,
       message: "Internal server error",
+    });
+  }
+});
+
+//Search Notes
+app.get("/search-notes/", authenticateToken, async (req, res) => {
+  const { user } = req.user;
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({
+      error: true,
+      message: "Search query is required",
+    });
+  }
+  try {
+    const matchingNotes = await Note.find({
+      userId: user._id,
+      $or: [
+        { title: { $regex: new RegExp(query, "i") } },
+        { content: { $regex: new RegExp(query, "i") } },
+      ],
+    });
+    return res.json({
+      error:false,
+      notes: matchingNotes,
+      message: "Notes matching the search query retrieves"
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: true,
+      message: "Internal Server Error",
     });
   }
 });

@@ -28,23 +28,25 @@ const Login = () => {
 
     setError("");
 
-    try{
-      const response = await axiosInstance.post("/login",{
+    try {
+      const response = await axiosInstance.post("/login", {
         email: email,
-        password: password, 
+        password: password,
       });
 
-      if(response.data && response.data.accessToken){
-        localStorage.setItem("token", response.data.accessToken)
-        navigate('/dashboard')
+      if (response.data && response.data.accessToken) {
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/dashboard");
       }
-
-    } catch(error) {
-      
-      if(error.response && error.response.data && error.response.data.message){
-        setError(error.response.data.message)
-      }else{
-        setError("An unexpected error occurred. Please try again")
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      } else {
+        setError("An unexpected error occurred. Please try again");
       }
     }
   };
@@ -52,8 +54,8 @@ const Login = () => {
     <div>
       <Navbar />
 
-      <div className="flex items-center justify-center mt-28">
-        <div className="w-96 border rounded bg-white px-7 py-10">
+      <div className="flex items-center justify-center mt-10 md:mt-28 px-4 sm:px-0">
+        <div className="w-full max-w-sm border rounded bg-white px-7 py-10 sm:w-96">
           <form onSubmit={handleLogin}>
             <h4 className="text-xl text-center mb-7">Login </h4>
             <input
