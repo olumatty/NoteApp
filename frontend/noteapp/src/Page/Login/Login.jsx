@@ -52,8 +52,6 @@ const Login = () => {
   };
   return (
     <div>
-      <Navbar />
-
       <div className="flex items-center justify-center mt-10 md:mt-28 px-4 sm:px-0">
         <div className="w-full max-w-sm border rounded bg-white px-7 py-10 sm:w-96">
           <form onSubmit={handleLogin}>
